@@ -10,6 +10,15 @@
             <h1> <a href="{% url 'home'%}">Django Blog</a></h1>
             <a href="{% url 'post_yeni' %}"> +Yeni blog post </a>
         </header>
+        {% if request.user.is_authenticated %}
+        <p>Hoş geldiniz, {{ request.user.username }}!</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        {% else %}
+            <p>hoş geldiniz, misafir</p><a href="{% url 'login' %}">Log in</a>
+        {% endif %}
         <div>
             {% block content %}
             {% endblock content %}
